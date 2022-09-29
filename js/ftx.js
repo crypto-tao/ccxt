@@ -654,12 +654,17 @@ module.exports = class ftx extends Exchange {
                     // BTC-MOVE-2022Q1
                     // BTC-MOVE-0106
                     // BTC-MOVE-WK-0121
-                    parsedId.pop ();
+                    const id = parsedId.pop ();
                     // remove expiry
                     // [ 'BTC', 'MOVE' ]
                     // [ 'BTC', 'MOVE' ]
                     // [ 'BTC', 'MOVE', 'WK' ]
-                    base = parsedId.join ('-');
+                    if (id.includes ('Q')) {
+                        base = parsedId.join ('-');
+                        base += '-QUARTERLY';
+                    } else {
+                        base = parsedId.join ('-');
+                    }
                 }
                 symbol = base + '/' + quote + ':' + settle + '-' + this.yymmdd (expiry, '');
             }

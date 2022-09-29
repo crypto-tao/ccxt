@@ -654,12 +654,17 @@ class ftx extends Exchange {
                     // BTC-MOVE-2022Q1
                     // BTC-MOVE-0106
                     // BTC-MOVE-WK-0121
-                    array_pop($parsedId);
+                    $id = array_pop($parsedId);
                     // remove $expiry
                     // array( 'BTC', 'MOVE' )
                     // array( 'BTC', 'MOVE' )
                     // array( 'BTC', 'MOVE', 'WK' )
-                    $base = implode('-', $parsedId);
+                    if ($id->includes ('Q')) {
+                        $base = implode('-', $parsedId);
+                        $base .= '-QUARTERLY';
+                    } else {
+                        $base = implode('-', $parsedId);
+                    }
                 }
                 $symbol = $base . '/' . $quote . ':' . $settle . '-' . $this->yymmdd($expiry, '');
             }

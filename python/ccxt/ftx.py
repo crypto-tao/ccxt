@@ -659,12 +659,16 @@ class ftx(Exchange):
                     # BTC-MOVE-2022Q1
                     # BTC-MOVE-0106
                     # BTC-MOVE-WK-0121
-                    parsedId.pop()
+                    id = parsedId.pop()
                     # remove expiry
                     # ['BTC', 'MOVE']
                     # ['BTC', 'MOVE']
                     # ['BTC', 'MOVE', 'WK']
-                    base = '-'.join(parsedId)
+                    if id.includes('Q'):
+                        base = '-'.join(parsedId)
+                        base += '-QUARTERLY'
+                    else:
+                        base = '-'.join(parsedId)
                 symbol = base + '/' + quote + ':' + settle + '-' + self.yymmdd(expiry, '')
             # check if a market is a spot or future market
             sizeIncrement = self.safe_string(market, 'sizeIncrement')
